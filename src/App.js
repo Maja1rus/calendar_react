@@ -13,7 +13,8 @@ function App() {
     // const listCalendar = moment();
     const [listCalendar, setListCalendar] = useState(moment())
     const startDay = listCalendar.clone().startOf('month').startOf('week')
-    // window.moment = moment
+    
+    window.moment = moment
     
     const prevBtnNavbar = () => setListCalendar(prev => prev.clone().subtract(1, 'month'))
     const todayBtnNavbar = () => setListCalendar(moment())
@@ -23,12 +24,15 @@ function App() {
         <div className="calendar-wrapper">
             <Header />
             <Navbar
-                today = {listCalendar}
+                today={listCalendar}
                 prevBtnNavbar={prevBtnNavbar}
                 todayBtnNavbar={todayBtnNavbar}
                 nextBtnNavbar={nextBtnNavbar}
             />
-            <CalendarGrid startDay={startDay} />
+            <CalendarGrid
+                startDay={startDay}
+                today={listCalendar}
+            />
         </div>
     )
 }

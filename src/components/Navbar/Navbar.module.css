@@ -23,6 +23,9 @@
 }
 
 .btn__wrap button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 0 4px;
     height: 24px;
     background: #F4F9F4;
@@ -42,4 +45,9 @@
 
 .btn__wrap button:hover{
     background: #A6E3E9;
+}
+
+.btn__wrap button img {
+    height: 14px;
+    width: 14px;
 }
