@@ -1,0 +1,45 @@
+.nav__wrapeer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f9f7f7;
+    padding: 17px;
+}
+
+.nav__text {
+    font-size: 32px;
+
+}
+
+.nav__title {
+    font-weight: 700;
+    margin-right: 15px;
+}
+
+.btn__wrap{
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, .2);
+}
+
+.btn__wrap button{
+    padding: 0 4px;
+    height: 24px;
+    background: #F4F9F4;
+    font-weight: 700;
+    border: 1px solid #393E46;
+    border-radius: 4px;
+    transition: 0.3s ease;
+}
+
+.btn__wrap button + button{
+    margin-left: 2px;
+}
+
+.btn__wrap button:nth-child(2) {
+    padding: 0 16px;
+}
+
+.btn__wrap button:hover{
+    background: #A6E3E9;
+}

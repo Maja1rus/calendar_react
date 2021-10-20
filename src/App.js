@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react'
+import './App.css'
+import moment from 'moment'
+import Header from './components/Header/Header'
+import Navbar from './components/Navbar/Navbar'
+import CalendarGrid from './components/CalendarGrid/CalendarGrid'
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    
+    // переменные по дате
+    moment.updateLocale('en', { week: { dow: 1 } })
+    // const listCalendar = moment();
+    const [listCalendar, setListCalendar] = useState(moment())
+    const startDay = listCalendar.clone().startOf('month').startOf('week')
+    // window.moment = moment
+    
+    const prevBtnNavbar = () => setListCalendar(prev => prev.clone().subtract(1, 'month'))
+    const todayBtnNavbar = () => setListCalendar(moment())
+    const nextBtnNavbar = () => setListCalendar((prev) => prev.clone().add(1, 'month'))
+
+    return (
+        <div className="calendar-wrapper">
+            <Header />
+            <Navbar
+                today = {listCalendar}
+                prevBtnNavbar={prevBtnNavbar}
+                todayBtnNavbar={todayBtnNavbar}
+                nextBtnNavbar={nextBtnNavbar}
+            />
+            <CalendarGrid startDay={startDay} />
+        </div>
+    )
 }
 
-export default App;
+export default App
+
