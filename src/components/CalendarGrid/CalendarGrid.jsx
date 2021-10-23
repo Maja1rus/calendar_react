@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 
 const GridWrapper = styled.div`
     display: grid;
@@ -44,21 +44,23 @@ const CurrentToday = styled.div`
 `
 
 
-const CalendarGrid = ({ startDay, today }) => {
-    const isCurrentToday = (day) => moment().isSame(day, 'day');
-    const isCurrentMouth = (day) => today.isSame(day, 'month')
+const CalendarGrid = ({ startDay, today}) => {
+    const isCurrentToday = (day) => DateTime.local().hasSame(day, 'day')
+    const isCurrentMouth = (day) => today.hasSame(day, 'month')
     const totalDays = 42;
-    const day = startDay.clone().subtract(1, 'day');
-    const daysArray = [...Array(totalDays)].map(() => day.add(1, 'day').clone())
+    const dayArr = startDay;
+    const daysArray = []
+    for (let i = 0; i < totalDays; i++){
+        daysArray.push(dayArr.plus({days: i}))
+    }
+
     return (
         <>
             <GridWrapper isHeader>
-                {[...Array(totalDays/6)].map((_, i) => (
-                    <CellWrapper isHeader isCurrentMouth>
+                {[...Array(totalDays / 6)].map((_, i) => (
+                    <CellWrapper isHeader isCurrentMouth key={i}>
                         <RowInCell justifyContent={'flex-end'} isHeader>
-                            {moment()
-                                .day(i + 1)
-                                .format('ddd')}
+                            {DateTime.local(i).toFormat('EEE')}
                         </RowInCell>
                     </CellWrapper>
                 ))}
@@ -66,19 +68,13 @@ const CalendarGrid = ({ startDay, today }) => {
             <GridWrapper>
                 {daysArray.map((dayItem) => (
                     <CellWrapper
-                        key={dayItem.unix()}
-                        isWeekend={dayItem.day() === 6 || dayItem.day() === 0}
+                        key={dayItem}
+                        isWeekend={dayItem.toFormat('c') === '6' || dayItem.toFormat('c') === '7'}
                         isCurrentMouth={isCurrentMouth(dayItem)}
                     >
                         <RowInCell justifyContent={'flex-end'}>
                             <DayWrapper>
-                                {!isCurrentToday(dayItem) ? (
-                                    dayItem.format('D')
-                                ) : (
-                                    <CurrentToday>
-                                        {dayItem.format('D')}
-                                    </CurrentToday>
-                                )}
+                                {!isCurrentToday(dayItem) ? dayItem.toFormat('d') : <CurrentToday>{dayItem.toFormat('d')}</CurrentToday>}
                             </DayWrapper>
                         </RowInCell>
                     </CellWrapper>
