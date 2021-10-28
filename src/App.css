@@ -1,38 +1,38 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+    padding: 0 15px 0 15px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    background: #E8F1F5;
+    color: #393E46;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+button {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: #393E46;
+    font-size: 16px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+#root {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.calendar-wrapper {
+    overflow: hidden;
+    border-radius: 8px;
+    border: 2px solid #52616b;
+    box-shadow: 0 0 10px 5px rgba(221, 221, 221, 1);
 }

@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react'
+import './App.css'
+import {DateTime} from 'luxon'
+import Header from './components/Header/Header'
+import Navbar from './components/Navbar/Navbar'
+import CalendarGrid from './components/CalendarGrid/CalendarGrid'
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    
+    // переменные по дате
+    const [listCalendar, setListCalendar] = useState(DateTime.local())
+    const startDay = listCalendar.startOf('month').startOf('week')
+    const endDay = listCalendar.endOf('month').endOf('week')
+
+    //логика Navbar
+    const prevBtnNavbar = () => setListCalendar((prev) => prev.minus({months: 1}))
+    const todayBtnNavbar = () => setListCalendar(DateTime.local())
+    const nextBtnNavbar = () => setListCalendar((prev) =>  prev.plus({months: 1}))
+
+    return (
+        <div className="calendar-wrapper">
+            <Header />
+            <Navbar
+                today={listCalendar}
+                prevBtnNavbar={prevBtnNavbar}
+                todayBtnNavbar={todayBtnNavbar}
+                nextBtnNavbar={nextBtnNavbar}
+            />
+            <CalendarGrid
+                startDay={startDay}
+                endDay={endDay}
+                today={listCalendar}
+            />
+        </div>
+    )
 }
 
-export default App;
+export default App
+
