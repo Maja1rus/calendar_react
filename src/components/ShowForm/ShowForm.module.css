@@ -63,6 +63,7 @@ input {
 .form__header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 8px 16px;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
@@ -70,10 +71,11 @@ input {
     background-color: rgba(243,244,246,var(--tw-bg-opacity));
 }
 
-.form__header span {
+.form__header span,
+.form__header button,
+.form__body_item {
     display: flex;
     align-items: center;
-    height: 24px;
 }
 
 .form__body {
@@ -86,13 +88,10 @@ input {
     border-bottom: 2px solid rgba(243,244,246, 1);
 }
 
-
-.form__body_item {
+.form__body_item span {
     display: flex;
     align-items: center;
-}
-
-.form__body_item span {
+    justify-content: center;
     padding-right: 20px;
 }
 
@@ -126,4 +125,9 @@ input {
 
 .form__save:hover {
     background-color: rgba(43, 122, 248, 1);
+}
+
+.svg {
+    width: 25px;
+    height: 25px;
 }

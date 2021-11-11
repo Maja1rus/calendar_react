@@ -14,8 +14,7 @@ function App() {
 
     const defaultEvent = {
         title: '',
-        description: '',
-        date: today.toSeconds()
+        description: ''
     }
 
     const [method, setMethod] = useState(null)
@@ -45,16 +44,19 @@ function App() {
             })
     }, [today])
 
+    console.log(today.toFormat('EEE'))
+
     return (
         <>
             <ShowForm
-                setEvents = {setEvents}
+                setEvents={setEvents}
                 eventUp={eventUp}
                 setEventUp={setEventUp}
                 isShowForm={isShowForm}
                 setIsShowForm={setIsShowForm}
                 method={method}
-                url = {url}
+                url={url}
+                today={today}
             />
             <div className="calendar-wrapper">
                 <Header />
