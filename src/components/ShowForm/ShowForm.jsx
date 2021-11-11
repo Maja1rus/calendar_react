@@ -4,8 +4,7 @@ import {
     IoReorderTwo,
     IoClose,
     IoTimeOutline,
-    IoText,
-    IoBookmarkOutline
+    IoText
 } from 'react-icons/io5'
 
 const ShowForm = ({setEvents, eventUp, setEventUp, isShowForm, setIsShowForm, method, url, today}) => {
@@ -103,12 +102,6 @@ const ShowForm = ({setEvents, eventUp, setEventUp, isShowForm, setIsShowForm, me
                                     onChange={(e) => changeEventHandler(e.target.value,'description')}
                                 />
                             </div>
-                            {/* <div className={classes.form__body_item}>
-                                <span>
-                                    <IoBookmarkOutline className={classes.svg}/>
-                                </span>
-                                <p className={classes.form__data}>цвета</p>
-                            </div> */}
                         </div>
                         <div className={classes.form__footer}>
                             <div className={classes.button__wrapper}>
