@@ -10,6 +10,7 @@ const Day = styled.div`
     width: 33px;
     margin: 3px;
     color: ${(props) => (props.isCurrentMouth ? '#393E46' : '#BAD7DF')};
+
 `
 const CurrentToday = styled.div`
     display: flex;
@@ -23,13 +24,12 @@ const CurrentToday = styled.div`
 `
 
 const DayWrapper = ({dayItem, today}) => {
-    
     const isCurrentToday = (day) => DateTime.now().hasSame(day, 'day')
     const isCurrentMouth = (day) => today.hasSame(day, 'month')
 
     return (
         <>
-            <Day isCurrentMouth={isCurrentMouth(dayItem)}>
+            <Day isCurrentMouth={isCurrentMouth(dayItem)}> 
                 <CurrentToday isCurrent={isCurrentToday(dayItem)}>
                     {dayItem.toFormat('d')}
                 </CurrentToday>

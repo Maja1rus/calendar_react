@@ -1,0 +1,129 @@
+input {
+    border: none;
+    outline: none;
+}
+
+.form__show_wrapper {
+    position: absolute;
+    z-index: 10;
+    background-color: rgba(255, 255, 255, 0.2);
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.button__wrapper {
+    padding: 8px 14px;
+    display: flex;
+    justify-content: flex-end;
+    
+}
+
+.button__wrapper button {
+    padding: 0 10px;
+    height: 25px;
+    background: #F4F9F4;
+    font-weight: 700;
+    border: 1px solid #393E46;
+    border-radius: 4px;
+    transition: 0.3s ease;
+}
+
+.button__wrapper button + button {
+    margin-left: 10px;
+}
+
+.button__wrapper button:hover{
+    background: #A6E3E9;
+}
+
+
+
+.form__wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 900px;
+}
+
+.form {
+    width: 400px;
+    border-radius: 8px;
+    border: 2px solid #52616b;
+    background: #ffffff;
+    box-shadow: 0 0 10px 5px rgba(221, 221, 221, 1);
+
+}
+
+.form__header {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 16px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    --tw-bg-opacity: 1;
+    background-color: rgba(243,244,246,var(--tw-bg-opacity));
+}
+
+.form__header span {
+    display: flex;
+    align-items: center;
+    height: 24px;
+}
+
+.form__body {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 250px;
+    padding: 20px 18px;
+    border-bottom: 2px solid rgba(243,244,246, 1);
+}
+
+
+.form__body_item {
+    display: flex;
+    align-items: center;
+}
+
+.form__body_item span {
+    padding-right: 20px;
+}
+
+.form__body_item input {
+    font-weight: 500px;
+    font-size: 20px;
+    border-bottom: 2px solid rgba(243,244,246, 1);
+}
+
+.form__body_item input:focus {
+    border-color: rgba(59,130,246, 0.8);
+}
+
+.form__data {
+    display: inline-block;
+}
+
+.form__footer {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 18px;
+}
+
+.form__save {
+    padding: 10px 15px;
+    border-radius: 7px;
+    color: #fff;
+    background-color: rgba(59,130,246, 0.8);
+    transition: 0.3s ease;
+}
+
+.form__save:hover {
+    background-color: rgba(43, 122, 248, 1);
+}
