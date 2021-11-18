@@ -1,0 +1,26 @@
+.event__wrapper{
+
+    margin: unset;
+    list-style-position: inside;
+    padding-left: 2px;
+}
+
+li {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2px;
+}
+
+.event__item {
+    padding: 3px;
+    width: 90%;
+    border: unset;
+    text-overflow: ellipsis;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    color: #f6f6f6;
+    background: #3282B8;
+    border-radius: 4px;
+    cursor: pointer;
+}

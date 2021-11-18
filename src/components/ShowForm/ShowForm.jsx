@@ -1,72 +1,92 @@
-import React from 'react'
+import React, {useState} from 'react'
 import classes from './ShowForm.module.css'
-import {
-    IoReorderTwo,
-    IoClose,
-    IoTimeOutline,
-    IoText
-} from 'react-icons/io5'
+import {useSelector} from 'react-redux'
+import {IoReorderTwo, IoClose, IoTimeOutline, IoText, IoTrashOutline} from 'react-icons/io5'
 
-const ShowForm = ({setEvents, eventUp, setEventUp, isShowForm, setIsShowForm, method, url, today}) => {
+const ShowForm = ({isShowForm, setIsShowForm, daySelected, selectedEvent, setSelectedEvent}) => {
+    const listCalendar = useSelector((state) => state.calendars)
+    const today = listCalendar.dateTime
+    const dayItem = daySelected ? daySelected : today
+
+    const [title, setTitle] = useState(selectedEvent ? selectedEvent.title : '')
+    const [description, setDescription] = useState(selectedEvent ? selectedEvent.description : '')
+
+
+    const clearCalendarEvent = () => {
+        setTitle('')
+        setDescription('')
+        setSelectedEvent(null)
+    }
     
-    const cancelButtonHandler = () => {
+    const handleSubmit = (e) => {
+        const calendarEvents = {
+            title,
+            description,
+            date: dayItem.toSeconds()
+        }
+        e.preventDefault()
+        let eventsArr = JSON.parse(localStorage.getItem('calendarEvents')) || []
+        if (selectedEvent) {
+            console.log('update')
+            const id = selectedEvent.id
+            let eventUp = eventsArr.find(item => item.id === id)
+            eventUp.title = title ? title : selectedEvent.title
+            eventUp.description = description ? description : selectedEvent.description
+        } else {
+            console.log('create')
+            eventsArr.push(calendarEvents)
+            eventsArr.forEach((n, i) => (n.id = i + 1))
+
+        }
+        localStorage.setItem('calendarEvents', JSON.stringify(eventsArr))
         setIsShowForm(false)
-        setEventUp(null)
+        clearCalendarEvent()
+    }
+    
+    const deleteEvent = () => {
+        let eventsArr = JSON.parse(localStorage.getItem('calendarEvents'))
+        const id = selectedEvent.id
+        let eventDel = eventsArr.findIndex((item) => item.id === id)
+        console.log('splice', eventsArr.splice(eventDel, 1))
+        localStorage.setItem('calendarEvents', JSON.stringify(eventsArr))
+        setIsShowForm(false)
+        clearCalendarEvent()
     }
 
-    const changeEventHandler = (text, field) => {
-        setEventUp((prevState) => ({
-            ...prevState,
-            [field]: text
-        }))
-    }
-
-    const eventFetchHandler = () => {
-        const fetchUrl =
-            method === 'Update'
-                ? `${url}/events/${eventUp.id}`
-                : `${url}/events`
-        const httpMethod = method === 'Update' ? 'PATCH' : 'POST'
-
-        fetch(fetchUrl, {
-            method: httpMethod,
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(eventUp)
-        })
-            .then((res) => res.json())
-            .then((res) => {
-                console.log(res)
-                if (method === 'Update') {
-                    setEvents((prevState) =>
-                        prevState.map((eventEl) =>eventEl.id === res.id ? res : eventEl)
-                    )
-                } else {
-                    setEvents((prevState) => [...prevState, res])
-                }
-                cancelButtonHandler()
-            })
+    console.log('selectedEvent', selectedEvent)
+    const cancelButtonHandler = () => {
+        clearCalendarEvent()
+        setIsShowForm(false)
     }
 
     return (
         <>
             {isShowForm ? (
-                <div
-                    className={classes.form__show_wrapper}
-                    onClick={cancelButtonHandler}
-                >
-                    <form
-                        className={classes.form}
-                        onClick={(e) => e.stopPropagation()}
-                    >
+                <div className={classes.form__show_wrapper}>
+                    <div className={classes.form}>
                         <div className={classes.form__header}>
                             <span>
                                 <IoReorderTwo className={classes.svg} />
                             </span>
-                            <button onClick={cancelButtonHandler}>
-                                <IoClose className={classes.svg} />
-                            </button>
+                            <div className={classes.button__wrapper_header}>
+                                {selectedEvent ? (
+                                    <button>
+                                        <IoTrashOutline
+                                            className={classes.svg}
+                                            onClick={deleteEvent}
+                                        />
+                                    </button>
+                                ) : (
+                                    ''
+                                )}
+
+                                <button>
+                                    <IoClose
+                                        className={classes.svg}
+                                        onClick={cancelButtonHandler}
+                                    />
+                                </button>
+                            </div>
                         </div>
                         <div className={classes.form__body}>
                             <div className={classes.form__body_item}>
@@ -75,11 +95,16 @@ const ShowForm = ({setEvents, eventUp, setEventUp, isShowForm, setIsShowForm, me
                                 </span>
                                 <input
                                     required
-                                    className={classes.form__input}
                                     type="text"
+                                    name="title"
+                                    className={classes.form__input}
+                                    defaultValue={
+                                        selectedEvent
+                                            ? selectedEvent.title
+                                            : title
+                                    }
                                     placeholder="Add title"
-                                    value={eventUp.title}
-                                    onChange={(e) =>changeEventHandler(e.target.value,'title')}
+                                    onChange={(e) => setTitle(e.target.value)}
                                 />
                             </div>
                             <div className={classes.form__body_item}>
@@ -87,7 +112,7 @@ const ShowForm = ({setEvents, eventUp, setEventUp, isShowForm, setIsShowForm, me
                                     <IoTimeOutline className={classes.svg} />
                                 </span>
                                 <p className={classes.form__data}>
-                                    {today.toFormat('DDDD')}
+                                    {dayItem.toFormat('DDDD')}
                                 </p>
                             </div>
                             <div className={classes.form__body_item}>
@@ -98,8 +123,16 @@ const ShowForm = ({setEvents, eventUp, setEventUp, isShowForm, setIsShowForm, me
                                     className={classes.form__input}
                                     type="text"
                                     placeholder="Add a description"
-                                    value={eventUp.description}
-                                    onChange={(e) => changeEventHandler(e.target.value,'description')}
+                                    name="description"
+                                    defaultValue={
+                                        selectedEvent
+                                            ? selectedEvent.description
+                                            : description
+                                    }
+                                    required
+                                    onChange={(e) =>
+                                        setDescription(e.target.value)
+                                    }
                                 />
                             </div>
                         </div>
@@ -108,12 +141,12 @@ const ShowForm = ({setEvents, eventUp, setEventUp, isShowForm, setIsShowForm, me
                                 <button onClick={cancelButtonHandler}>
                                     Cancel
                                 </button>
-                                <button onClick={eventFetchHandler}>
-                                    {method}
+                                <button type="submit" onClick={handleSubmit}>
+                                    {selectedEvent ? 'Update' : 'Create'}
                                 </button>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
             ) : null}
         </>

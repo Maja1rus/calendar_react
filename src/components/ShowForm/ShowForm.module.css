@@ -16,10 +16,17 @@ input {
     justify-content: center;
 }
 
+.button__wrapper_header {
+    display: flex;
+}
+.button__wrapper_header button + button {
+    margin-left: 10px;
+}
 
 .button__wrapper {
     padding: 8px 14px;
     display: flex;
+    align-items: center;
     justify-content: flex-end;
     
 }
